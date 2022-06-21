@@ -6,7 +6,6 @@ const {errorHandler} = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 const port = process.env.PORT || 5000
 
-
 connectDB()
 
 const app = express()
@@ -20,5 +19,6 @@ app.use('/users', require('./routes/userRoutes'))
 app.use('/lists', require('./routes/listRoutes'))
 
 app.use(errorHandler)
+console.log('testing pm2 logging')
 
 app.listen(port, () => console.log(`server started on port ${port}`))
