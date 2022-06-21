@@ -28,6 +28,6 @@ jobs:
     - name: 'Create env file'
       run: |
         touch .env
-        echo ${{ secrets.ENV }} | base64 --decode > >> .env
+        echo ${{ secrets.ENV }} | base64 --decode > .env
         cat .env
     - run: npm run build --if-present
