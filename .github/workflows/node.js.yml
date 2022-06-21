@@ -28,9 +28,6 @@ jobs:
     - name: 'Create env file'
       run: |
         touch .env
-        echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
-        echo PORT=${{ secrets.PORT }} >> .env
-        echo MONGO_URI=${{ secrets.MONGO }} >> .env
-        echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+        echo ${{ secrets.ENV }} | base64 --decode > >> .env
         cat .env
     - run: npm run build --if-present
