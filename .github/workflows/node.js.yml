@@ -30,4 +30,3 @@ jobs:
         touch .env
         echo ${{ secrets.ENV }} | base64 --decode > .env
         cat .env
-    - run: pm2 restart secondbrain-api
