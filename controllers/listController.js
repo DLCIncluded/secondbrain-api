@@ -140,10 +140,7 @@ const setDone = asyncHandler(async (req,res) => {
 				res.status(200).json(docs)
 			}
 		})
-
 	// res.status(200).json({message: 'testing'})
-
-	
 })
 
 // @desc	Add to list 
