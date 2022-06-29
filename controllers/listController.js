@@ -194,6 +194,57 @@ const addToList = asyncHandler(async (req,res) => {
 		 });
 })
 
+// @desc	Update list item
+// @route	PATCH /api/lists/item/:listid
+//access	Private
+const updateListItem = asyncHandler(async (req,res) => {
+	const itemid = req.body.itemid
+	const sortorder = req.body.sortorder
+	
+	const list = await List.findById(req.params.listid)
+	// console.log(list)
+	if(!list){
+		res.status(400)
+		throw new Error('List not found')
+	}
+
+	const user = await User.findById(req.user.id)
+	if(!user){
+		res.status(401)
+		throw new Error('User not found')
+	}
+
+	//check to see if user has access to the list:
+	const accessList = await List.find({
+		_id: req.params.listid,
+		"users._id": req.user.id
+	})
+	// console.log(`found ${accessList.length} that match id and user`)
+	if(accessList.length<1) {
+		res.status(401)
+		throw new Error('Not Authorized')
+	}
+
+	if(!req.body.name){
+		res.status(400)
+		throw new Error('Missing item name')
+	}
+
+	List.findOneAndUpdate(
+		{ _id: req.params.listid, "listItems._id": itemid }, 
+		{$set: {'listItems.$.sortorder': req.body.sortorder}},
+		{new: true}, 
+		function(err, docs){
+			if(err){
+				res.status(401)
+				throw new Error(err.message)
+			}else{
+				// console.log(docs)
+				res.status(200).json(docs)
+			}
+		})
+})
+
 // @desc	Delete list
 // @route	DELETE /api/lists/:listid
 //access	Private

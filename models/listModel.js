@@ -19,7 +19,8 @@ const listSchema = mongoose.Schema({
 	description: String,
 	listItems: [{
 		name: String,
-		status: Boolean
+		status: Boolean,
+		sortorder: Number
 	}],
 },{
 	timestamps: true
